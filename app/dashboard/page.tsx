@@ -8,7 +8,6 @@ import { OverallStats } from "@/components/overall-stats"
 export default function Dashboard() {
   return (
     <div className="flex min-h-screen flex-col">
-      <DashboardHeader />
       <main className="flex-1 container mx-auto px-4 py-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           <Wallet />

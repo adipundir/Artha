@@ -1,43 +1,16 @@
+"use client";
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import Image from "next/image"
+import { useActiveWallet } from "thirdweb/react"
 
 export default function LandingPage() {
+  const activeWallet = useActiveWallet();
+  const isConnected = !!activeWallet;
+
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="border-b">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <div className="relative w-8 h-8">
-              <div className="absolute inset-0 bg-primary/20 rounded-full blur-sm animate-pulse"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-primary">
-                  <path d="M16 2L4 8L16 14L28 8L16 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M4 16L16 22L28 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M4 24L16 30L28 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
-            </div>
-            <span className="font-bold text-xl flex items-center">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/70">Artha</span>
-              <span className="ml-1 text-xs px-1.5 py-0.5 bg-primary/10 rounded-md text-primary">AI</span>
-            </span>
-          </div>
-          <nav className="space-x-4">
-            <Link href="#features" className="text-sm font-medium hover:text-primary">
-              Features
-            </Link>
-            <Link href="#about" className="text-sm font-medium hover:text-primary">
-              About
-            </Link>
-            <Button variant="outline" size="sm" asChild>
-              <Link href="/dashboard">
-                Launch App
-              </Link>
-            </Button>
-          </nav>
-        </div>
-      </header>
+      {/* Header removed since it's now in the layout */}
       
       <main className="flex-1">
         {/* Hero Section */}
@@ -94,63 +67,69 @@ export default function LandingPage() {
           {/* Grid decorative elements */}
           <div className="absolute inset-0 bg-[linear-gradient(rgba(var(--background),0.8)_1px,transparent_1px),linear-gradient(90deg,rgba(var(--background),0.8)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_40%,transparent_100%)]"></div>
           
-          <div className="container mx-auto px-4 z-10 flex flex-col md:flex-row items-center gap-12 relative">
+          <div className="container mx-auto px-4 z-10 flex flex-col md:flex-row items-center justify-center gap-16 relative">
             {/* Visible middle logos - positioned between text and card */}
-            <div className="absolute hidden md:block z-10" style={{ left: '45%', top: '20%' }}>
+            <div className="absolute hidden md:block z-10" style={{ left: '46%', top: '20%' }}>
               <div className="w-16 h-16 opacity-35 animate-float">
                 <Image src="/mantleCoin.webp" alt="" width={64} height={64} className="object-contain" />
               </div>
             </div>
             
-            <div className="absolute hidden md:block z-10" style={{ left: '48%', top: '50%', transform: 'translateY(-50%)' }}>
+            <div className="absolute hidden md:block z-10" style={{ left: '49%', top: '50%', transform: 'translateY(-50%)' }}>
               <div className="w-20 h-20 opacity-30 animate-float" style={{ animationDelay: '2.5s' }}>
                 <Image src="/mantleCoin.webp" alt="" width={80} height={80} className="object-contain" />
               </div>
             </div>
             
-            <div className="absolute hidden md:block z-10" style={{ left: '43%', top: '75%' }}>
+            <div className="absolute hidden md:block z-10" style={{ left: '44%', top: '75%' }}>
               <div className="w-14 h-14 opacity-25 animate-float" style={{ animationDelay: '1.5s' }}>
                 <Image src="/mantleCoin.webp" alt="" width={56} height={56} className="object-contain" />
               </div>
             </div>
             
-            <div className="absolute hidden md:block z-10" style={{ left: '55%', top: '35%' }}>
+            <div className="absolute hidden md:block z-10" style={{ left: '56%', top: '35%' }}>
               <div className="w-12 h-12 opacity-20 animate-float" style={{ animationDelay: '3.2s' }}>
                 <Image src="/mantleCoin.webp" alt="" width={48} height={48} className="object-contain" />
               </div>
             </div>
             
-            <div className="absolute hidden md:block z-10" style={{ left: '52%', top: '65%' }}>
+            <div className="absolute hidden md:block z-10" style={{ left: '53%', top: '65%' }}>
               <div className="w-10 h-10 opacity-25 animate-float" style={{ animationDelay: '4.3s' }}>
                 <Image src="/mantleCoin.webp" alt="" width={40} height={40} className="object-contain" />
               </div>
             </div>
             
-            <div className="md:w-1/2 text-left space-y-6">
+            <div className="md:w-5/12 text-center md:text-left space-y-6">
               <div className="inline-block px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-sm font-medium text-primary mb-2">
                 AI-Powered DeFi at your fingertips
               </div>
               <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
-                Trade Smarter with <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/60">Artha ✨</span>
+                Invest Smarter with <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/60">Artha ✨</span>
             </h1>
               <p className="text-xl text-muted-foreground">
                 AI-powered trading on Mantle that maximizes your profits by analyzing market sentiment and whale portfolios.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="px-8 rounded-full shadow-lg shadow-primary/20 relative overflow-hidden group" asChild>
-                  <Link href="/dashboard">
-                    <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary to-primary/80 group-hover:scale-105 transition-transform duration-300"></span>
-                    <span className="relative">Connect Wallet</span>
-                  </Link>
-                </Button>
-                <Button size="lg" variant="outline" asChild className="rounded-full border-primary/20 hover:bg-primary/5">
-                  <Link href="/dashboard">
-                    Launch App
-                  </Link>
-                </Button>
+                {!isConnected && (
+                  <Button size="lg" className="px-8 rounded-full shadow-lg shadow-primary/20 relative overflow-hidden group" asChild>
+                    <Link href="/dashboard">
+                      <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary to-primary/80 group-hover:scale-105 transition-transform duration-300"></span>
+                      <span className="relative">Connect Wallet</span>
+                    </Link>
+                  </Button>
+                )}
+                
+                {isConnected && (
+                  <Button size="lg" className="px-8 rounded-full shadow-lg shadow-primary/20 relative overflow-hidden group" asChild>
+                    <Link href="/dashboard">
+                      <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary to-primary/80 group-hover:scale-105 transition-transform duration-300"></span>
+                      <span className="relative">Launch App</span>
+                    </Link>
+                  </Button>
+                )}
               </div>
             </div>
-            <div className="md:w-1/2 flex justify-center">
+            <div className="md:w-5/12 flex justify-center mt-8 md:mt-0">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/5 rounded-3xl blur-xl"></div>
                 <div className="relative bg-background/80 backdrop-blur-sm border border-border rounded-3xl p-6 shadow-xl min-w-[320px]">
