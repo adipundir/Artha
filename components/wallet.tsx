@@ -1,7 +1,7 @@
 "use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { WalletIcon, ExternalLink } from "lucide-react"
+import { WalletIcon, ExternalLink, PlusCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useActiveWallet, useWalletBalance } from "thirdweb/react"
 import { useEffect, useState } from "react"
@@ -17,6 +17,8 @@ export function Wallet() {
   const [mntPriceInUSD, setMntPriceInUSD] = useState(0)
   const [isPriceFetching, setIsPriceFetching] = useState(true)
   const [isWalletReady, setIsWalletReady] = useState(false)
+  // Demo investment state
+  const [mntInvestment, setMntInvestment] = useState(25)
   
   useEffect(() => {
     if (activeWallet) {
@@ -85,6 +87,14 @@ export function Wallet() {
 
   const usdValue = balanceData ? parseFloat(balanceData.displayValue) * mntPriceInUSD : 0
   
+  // Demo investment value in USDC
+  const investmentUsdValue = mntInvestment * mntPriceInUSD
+  
+  // Simulating an LP investment
+  const handleInvestInLP = () => {
+    setMntInvestment(prevValue => prevValue + 5)
+  }
+  
   // Determine if we should show loading state
   const isLoading = !isWalletReady || isBalanceLoading || isPriceFetching
 
@@ -117,21 +127,54 @@ export function Wallet() {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          <div>
-            <div className="text-sm text-muted-foreground mb-1">MNT Balance</div>
-            {isLoading ? (
-              <Skeleton className="h-8 w-32" />
-            ) : (
-              <div className="text-2xl font-bold">{displayValue} {displaySymbol}</div>
-            )}
+          {/* Investment in LP section - moved to top and made larger */}
+          <div className="bg-muted/20 p-4 rounded-lg">
+            <div className="flex justify-between items-center mb-3">
+              <div className="text-base font-semibold">Your Investment</div>
+              <Button 
+                size="sm" 
+                variant="outline" 
+                className="h-8"
+                onClick={handleInvestInLP}
+              >
+                <PlusCircle className="h-4 w-4 mr-1" /> Invest Funds
+              </Button>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <div className="text-sm text-muted-foreground mb-1">MNT Invested</div>
+                <div className="text-2xl font-bold">{mntInvestment.toFixed(2)} MNT</div>
+              </div>
+              <div>
+                <div className="text-sm text-muted-foreground mb-1">USDC Value</div>
+                <div className="text-2xl font-bold">${investmentUsdValue.toFixed(2)}</div>
+              </div>
+            </div>
           </div>
-          <div>
-            <div className="text-sm text-muted-foreground mb-1">USD Value</div>
-            {isLoading ? (
-              <Skeleton className="h-6 w-24" />
-            ) : (
-              <div className="text-lg">${usdValue.toFixed(2)}</div>
-            )}
+          
+          {/* Balance section with matching padding */}
+          <div className="bg-background p-4 rounded-lg border">
+            <div className="mb-3">
+              <div className="text-base font-semibold mb-3">Wallet Balance</div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <div className="text-sm text-muted-foreground mb-1">MNT Balance</div>
+                  {isLoading ? (
+                    <Skeleton className="h-8 w-32" />
+                  ) : (
+                    <div className="text-lg font-medium">{displayValue} {displaySymbol}</div>
+                  )}
+                </div>
+                <div>
+                  <div className="text-sm text-muted-foreground mb-1">USD Value</div>
+                  {isLoading ? (
+                    <Skeleton className="h-6 w-24" />
+                  ) : (
+                    <div className="text-lg font-medium">${usdValue.toFixed(2)}</div>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </CardContent>

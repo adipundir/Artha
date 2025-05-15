@@ -5,36 +5,36 @@ import { Badge } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { ArrowDownUp } from "lucide-react"
 
-// Mock data for activity feed
+// Mock data for MNT/USDC activity feed
 const activities = [
   {
     id: 1,
     time: "10:45 AM",
-    token: "ETH",
+    token: "MNT",
     action: "Buy",
-    amount: 0.1,
-    price: 3010.25,
-    balance: 1.25,
+    amount: 100,
+    price: 0.48,
+    balance: 1100,
     profit: null,
   },
   {
     id: 2,
     time: "09:30 AM",
-    token: "ARB",
+    token: "MNT",
     action: "Sell",
     amount: 50,
-    price: 1.22,
-    balance: 200,
-    profit: 6.0,
+    price: 0.49,
+    balance: 1000,
+    profit: 0.5,
   },
   {
     id: 3,
     time: "Yesterday",
-    token: "ETH",
+    token: "MNT",
     action: "Buy",
-    amount: 0.15,
-    price: 2950.75,
-    balance: 1.15,
+    amount: 200,
+    price: 0.46,
+    balance: 1050,
     profit: null,
   },
   {
@@ -44,17 +44,17 @@ const activities = [
     action: "Sell",
     amount: 200,
     price: 0.47,
-    balance: 1000,
+    balance: 850,
     profit: -2.0,
   },
   {
     id: 5,
     time: "2 days ago",
-    token: "ARB",
+    token: "MNT",
     action: "Buy",
-    amount: 100,
-    price: 1.15,
-    balance: 250,
+    amount: 300,
+    price: 0.45,
+    balance: 1050,
     profit: null,
   },
 ]
@@ -63,7 +63,7 @@ export function ActivityFeed() {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-xl font-bold">Agent Activity Feed</CardTitle>
+        <CardTitle className="text-xl font-bold">MNT/USDC Activity Feed</CardTitle>
         <ArrowDownUp className="h-5 w-5 text-muted-foreground" />
       </CardHeader>
       <CardContent>

@@ -1,40 +1,97 @@
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { TrendingUp, TrendingDown } from "lucide-react"
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts"
+import { Shield, AlertTriangle, ArrowRight } from "lucide-react"
+import { Progress } from "./ui/progress"
+
 
 export function OverallStats() {
-  // Mock data
-  const dailyReturn = 2.3
-  const weeklyReturn = -1.5
-  const monthlyReturn = 8.7
+  // Mock portfolio allocation data
+  const portfolioData = [
+    { name: "MNT", value: 45, color: "#8884d8" },
+    { name: "USDC", value: 25, color: "#82ca9d" },
+    { name: "ETH", value: 20, color: "#ffc658" },
+    { name: "Other", value: 10, color: "#ff8042" }
+  ]
+
+  // Risk assessment score (0-100)
+  const riskScore = 65
+
+  // Risk category based on score
+  const getRiskCategory = (score : number) => {
+    if (score < 30) return { label: "Low", color: "text-green-500", icon: <Shield className="h-4 w-4 mr-1" /> }
+    if (score < 70) return { label: "Medium", color: "text-amber-500", icon: <AlertTriangle className="h-4 w-4 mr-1" /> }
+    return { label: "High", color: "text-red-500", icon: <AlertTriangle className="h-4 w-4 mr-1" /> }
+  }
+
+  const riskCategory = getRiskCategory(riskScore)
+
+  // Calculate total portfolio value
+  const totalValue = portfolioData.reduce((sum, item) => sum + item.value, 0)
 
   return (
     <Card>
       <CardHeader className="pb-2">
-        <CardTitle className="text-xl font-bold">Overall Returns</CardTitle>
+        <CardTitle className="text-xl font-bold">Portfolio Insights</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          <div className="flex justify-between items-center">
-            <span className="text-sm">Daily</span>
-            <div className={`flex items-center ${dailyReturn >= 0 ? "text-green-500" : "text-red-500"}`}>
-              {dailyReturn >= 0 ? <TrendingUp className="h-4 w-4 mr-1" /> : <TrendingDown className="h-4 w-4 mr-1" />}
-              <span className="font-medium">{dailyReturn}%</span>
+          {/* Asset Allocation Chart */}
+          <div>
+            <div className="text-sm font-medium mb-2">Asset Allocation</div>
+            <div className="h-[120px] flex items-center justify-center">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={portfolioData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={30}
+                    outerRadius={50}
+                    paddingAngle={2}
+                    dataKey="value"
+                  >
+                    {portfolioData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip formatter={(value) => [`${value}%`, 'Allocation']} />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="grid grid-cols-2 gap-1 mt-2">
+              {portfolioData.map((asset) => (
+                <div key={asset.name} className="flex items-center text-xs">
+                  <div className="w-2 h-2 rounded mr-1" style={{ backgroundColor: asset.color }}></div>
+                  <span>{asset.name}: {asset.value}%</span>
+                </div>
+              ))}
             </div>
           </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm">Weekly</span>
-            <div className={`flex items-center ${weeklyReturn >= 0 ? "text-green-500" : "text-red-500"}`}>
-              {weeklyReturn >= 0 ? <TrendingUp className="h-4 w-4 mr-1" /> : <TrendingDown className="h-4 w-4 mr-1" />}
-              <span className="font-medium">{weeklyReturn}%</span>
+
+          {/* Risk Assessment */}
+          <div>
+            <div className="text-sm font-medium mb-2">Risk Assessment</div>
+            <div className="flex items-center mb-1">
+              <div className={`flex items-center ${riskCategory.color}`}>
+                {riskCategory.icon}
+                <span className="font-medium">{riskCategory.label} Risk</span>
+              </div>
+            </div>
+            <Progress value={riskScore} className="h-2" />
+            <div className="flex justify-between text-xs text-muted-foreground mt-1">
+              <span>Conservative</span>
+              <span>Balanced</span>
+              <span>Aggressive</span>
             </div>
           </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm">Monthly</span>
-            <div className={`flex items-center ${monthlyReturn >= 0 ? "text-green-500" : "text-red-500"}`}>
-              {monthlyReturn >= 0 ? <TrendingUp className="h-4 w-4 mr-1" /> : <TrendingDown className="h-4 w-4 mr-1" />}
-              <span className="font-medium">{monthlyReturn}%</span>
+
+          {/* Recommendation */}
+          <div className="pt-2 mt-2 border-t">
+            <div className="flex items-center text-sm">
+              <ArrowRight className="h-4 w-4 mr-1 text-primary" />
+              <span>Consider diversifying into more stablecoins to reduce risk</span>
             </div>
           </div>
         </div>

@@ -1,8 +1,9 @@
 import { Wallet } from "@/components/wallet"
-import { TokenTracker } from "@/components/token-tracker"
+import { WhaleTracker } from "@/components/whale-tracker"
 import { ActivityFeed } from "@/components/activity-feed"
 import { ProfitTracker } from "@/components/profit-tracker"
 import { OverallStats } from "@/components/overall-stats"
+import TradingSignal from "./trading-signal"
 
 export default function Dashboard() {
   return (
@@ -14,7 +15,8 @@ export default function Dashboard() {
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
-            <TokenTracker />
+            <TradingSignal />
+            <WhaleTracker />
             <ActivityFeed />
           </div>
           <div className="lg:col-span-1">
