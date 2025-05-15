@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { AutoConnect, ThirdwebProvider } from "thirdweb/react";
 import { createThirdwebClient } from "thirdweb";
+import { Analytics } from "@vercel/analytics/next"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,6 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <ThirdwebProvider>
+      <Analytics />
       <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
