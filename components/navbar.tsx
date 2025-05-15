@@ -1,9 +1,15 @@
 "use client"
 import Link from "next/link"
-import ConnectBtn from "./ConnectButton"
+import ConnectBtn, { useWalletState } from "./ConnectButton"
+import { useState } from "react"
+import { Menu, X } from "lucide-react"
+
 export function Navbar() {
+  const { isConnected } = useWalletState();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
   return (
-    <header className="border-b">
+    <header className="border-b sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <div className="flex items-center gap-2">
           <Link href="/">
@@ -25,16 +31,77 @@ export function Navbar() {
             </div>
           </Link>
         </div>
-        <nav className="space-x-4">
-          <Link href="/#features" className="text-sm font-medium hover:text-primary">
+        
+        {/* Mobile menu button and connect button */}
+        <div className="md:hidden flex items-center gap-2">
+          <ConnectBtn />
+          <button 
+            className="p-2 rounded-md"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+
+        {/* Desktop nav */}
+        <nav className="hidden md:flex items-center space-x-6">
+          <Link href="/" className="text-sm font-medium hover:text-primary inline-flex items-center">
+            Home
+          </Link>
+          <Link href="/#features" className="text-sm font-medium hover:text-primary inline-flex items-center">
             Features
           </Link>
-          <Link href="/#about" className="text-sm font-medium hover:text-primary">
+          <Link href="/#about" className="text-sm font-medium hover:text-primary inline-flex items-center">
             About
           </Link>
-          <ConnectBtn />
+          {isConnected && (
+            <Link href="/dashboard" className="text-sm font-medium hover:text-primary inline-flex items-center">
+              Dashboard
+            </Link>
+          )}
+          <div className="inline-flex items-center">
+            <ConnectBtn />
+          </div>
         </nav>
       </div>
+      
+      {/* Mobile nav */}
+      {isMenuOpen && (
+        <div className="md:hidden py-4 px-4 border-t">
+          <nav className="flex flex-col space-y-4">
+            <Link 
+              href="/" 
+              className="text-sm font-medium hover:text-primary py-2"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Home
+            </Link>
+            <Link 
+              href="/#features" 
+              className="text-sm font-medium hover:text-primary py-2"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Features
+            </Link>
+            <Link 
+              href="/#about" 
+              className="text-sm font-medium hover:text-primary py-2"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              About
+            </Link>
+            {isConnected && (
+              <Link 
+                href="/dashboard" 
+                className="text-sm font-medium hover:text-primary py-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Dashboard
+              </Link>
+            )}
+          </nav>
+        </div>
+      )}
     </header>
   )
 } 

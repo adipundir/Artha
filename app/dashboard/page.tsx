@@ -1,5 +1,4 @@
 import { Wallet } from "@/components/wallet"
-import { DashboardHeader } from "@/components/dashboard-header"
 import { TokenTracker } from "@/components/token-tracker"
 import { ActivityFeed } from "@/components/activity-feed"
 import { ProfitTracker } from "@/components/profit-tracker"
