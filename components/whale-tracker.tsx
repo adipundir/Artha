@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Skeleton } from "@/components/ui/skeleton"
 import { ExternalLink, FishSymbol } from "lucide-react"
-import { getTopMntHolders } from "@/app/api/actions"
+import { getTopMntHolders } from "@/app/actions"
 
 // Type for whale data
 type WhaleData = {
@@ -30,7 +30,7 @@ export function WhaleTracker() {
         const data = await getTopMntHolders()
         
         // Add an id if it doesn't exist
-        const processedData = data.map((whale, index) => {
+        const processedData = data.map((whale: WhaleData, index: number) => {
           // Only add id if it doesn't already exist
           if (whale.id === undefined) {
             return { ...whale, id: index + 1 }
@@ -39,7 +39,7 @@ export function WhaleTracker() {
         })
         
         // Sort by WMNT balance in descending order
-        const sortedData = processedData.sort((a, b) => b.mntBalance - a.mntBalance)
+        const sortedData = processedData.sort((a: WhaleData, b: WhaleData) => b.mntBalance - a.mntBalance)
         
         setWhales(sortedData)
         setLoading(false)
