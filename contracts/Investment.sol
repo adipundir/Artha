@@ -21,6 +21,8 @@ contract MantleInvestmentContract {
     uint256 public constant WITHDRAW_FEE = 100; // 1%
     uint256 public constant FEE_DENOMINATOR = 10000;
 
+    event Rebalanced(string action, uint256 amount);
+
     constructor(address _swapper, address _usdc) {
         owner = msg.sender;
         swapper = ISwapContract(_swapper);
@@ -42,15 +44,19 @@ contract MantleInvestmentContract {
     function rebalance(uint8 mode) external {
         require(msg.sender == owner, "Not owner");
 
-        if (mode == 1) {
+        if (mode == 2) {
             uint256 mntBalance = address(this).balance;
             require(mntBalance > 1e18, "Not enough MNT");
             uint256 toSwap = mntBalance - 1e18;
             swapper.swapMNTToUSDC{value: toSwap}();
-        } else if (mode == 2) {
+            emit Rebalanced("SELL", toSwap); // sold MNT to get USDC
+        } else if (mode == 1) {
             uint256 usdcBalance = IERC20(usdc).balanceOf(address(this));
             IERC20(usdc).approve(address(swapper), usdcBalance);
             swapper.swapUSDCToMNT(usdcBalance);
+            emit Rebalanced("BUY", usdcBalance); // used USDC to buy MNT
+        } else {
+            emit Rebalanced("HOLD", 0);
         }
     }
 

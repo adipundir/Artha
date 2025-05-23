@@ -1,0 +1,2 @@
+# Ignore contracts folder for ESLint
+contracts/**/* 

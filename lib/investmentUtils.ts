@@ -35,6 +35,25 @@ export const InvestmentContract = getContract({
 		"type": "constructor"
 	},
 	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "action",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "Rebalanced",
+		"type": "event"
+	},
+	{
 		"inputs": [],
 		"name": "FEE_DENOMINATOR",
 		"outputs": [

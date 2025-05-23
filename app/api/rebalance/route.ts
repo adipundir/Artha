@@ -1,9 +1,6 @@
 import { NextResponse } from 'next/server';
 import { rebalanceInvestment, decideRebalanceMode } from './actions';
 
-// For backward compatibility 
-const API_SECRET = process.env.REBALANCE_API_SECRET || 'default-secret-change-me';
-
 /**
  * POST handler for the rebalance API endpoint
  * This can be called by a cron job or manually triggered
